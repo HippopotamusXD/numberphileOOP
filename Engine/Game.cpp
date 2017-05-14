@@ -1,5 +1,5 @@
-/****************************************************************************************** 
- *	Chili DirectX Framework Version 16.07.20											  *	
+/******************************************************************************************
+ *	Chili DirectX Framework Version 16.07.20											  *
  *	Game.cpp																			  *
  *	Copyright 2016 PlanetChili.net <http://www.planetchili.net>							  *
  *																						  *
@@ -21,17 +21,18 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include <vector>
+#include <cstdlib>
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd )
+	wnd(wnd),
+	gfx(wnd)
 {
 }
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
+	gfx.BeginFrame();
 	UpdateModel();
 	ComposeFrame();
 	gfx.EndFrame();
@@ -39,21 +40,56 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	leftClick();
+	rightClick();
 }
 
 
 void Game::ComposeFrame()
 {
+	calcPos();
+	display();
 }
 
 void Game::leftClick()
 {
-	if (wnd.mouse.LeftIsPressed() && !clicked) {
-		clicked = true;
-		Point Dot(MainWindow& wnd);
-		Points.push_back(Dot);
+	if (!initialSet) {
+		if (wnd.mouse.LeftIsPressed() && !clicked) {
+			clicked = true;
+			Point Point(wnd);
+			Points.push_back(Point);
+			staticNum++;
+		}
+		if (!wnd.mouse.LeftIsPressed()) {
+			clicked = false;
+		}
 	}
-	if (!wnd.mouse.LeftIsPressed()) {
-		clicked = false;
+}
+
+void Game::rightClick()
+{
+	if (wnd.mouse.RightIsPressed() && !wnd.mouse.LeftIsPressed() && !initialSet) {
+		initialSet = true;
+		Point Point(wnd);
+		Points.push_back(Point);
+	}
+}
+
+void Game::display()
+{
+	for (int i = 0; i < Points.size(); i++) {
+		gfx.PutPixel(Points[i].x, Points[i].y, 255, 255, 255);
+	}
+}
+
+void Game::calcPos()
+{
+	if (initialSet) {
+		int nextPoint = rand() % staticNum;
+		int max = Points.size() - 1;
+		int newX = Points[nextPoint].x - ((Points[nextPoint].x - Points[max].x) / (staticNum - 1));
+		int newY = Points[nextPoint].y - ((Points[nextPoint].y - Points[max].y) / (staticNum - 1));
+		Point Dot(newX, newY);
+		Points.push_back(Dot);
 	}
 }

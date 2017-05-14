@@ -40,6 +40,9 @@ private:
 	/*  User Functions              */
 	/********************************/
 	void leftClick();
+	void rightClick();
+	void display();
+	void calcPos();
 private:
 	MainWindow& wnd;
 	Graphics gfx;
@@ -48,5 +51,8 @@ private:
 	/********************************/
 	std::vector <Point> Points;
 
+	int staticNum = 0;
+
 	bool clicked = false;
+	bool initialSet = false;
 };
