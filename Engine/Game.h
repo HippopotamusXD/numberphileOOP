@@ -23,6 +23,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include "Point.h"
+#include <vector>
 
 class Game
 {
@@ -37,10 +39,14 @@ private:
 	/********************************/
 	/*  User Functions              */
 	/********************************/
+	void leftClick();
 private:
 	MainWindow& wnd;
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
 	/********************************/
+	std::vector <Point> Points;
+
+	bool clicked = false;
 };

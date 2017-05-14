@@ -20,6 +20,7 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include <vector>
 
 Game::Game( MainWindow& wnd )
 	:
@@ -40,6 +41,19 @@ void Game::UpdateModel()
 {
 }
 
+
 void Game::ComposeFrame()
 {
+}
+
+void Game::leftClick()
+{
+	if (wnd.mouse.LeftIsPressed() && !clicked) {
+		clicked = true;
+		Point Dot(MainWindow& wnd);
+		Points.push_back(Dot);
+	}
+	if (!wnd.mouse.LeftIsPressed()) {
+		clicked = false;
+	}
 }
